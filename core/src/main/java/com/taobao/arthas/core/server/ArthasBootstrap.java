@@ -79,7 +79,10 @@ public class ArthasBootstrap {
         }
 
         try {
-            ShellServerOptions options = new ShellServerOptions().setInstrumentation(instrumentation).setPid(pid);
+            ShellServerOptions options = new ShellServerOptions()
+                            .setInstrumentation(instrumentation)
+                            .setPid(pid)
+                            .setSessionTimeout(configure.getSessionTimeout() * 1000);
             shellServer = new ShellServerImpl(options, this);
             BuiltinCommandPack builtinCommands = new BuiltinCommandPack();
             List<CommandResolver> resolvers = new ArrayList<CommandResolver>();
@@ -139,7 +142,7 @@ public class ArthasBootstrap {
             // ignore
         }
         logger.info("as-server destroy completed.");
-        // see middleware-container/arthas/issues/123
+        // see https://github.com/alibaba/arthas/issues/319
         LogUtil.closeResultLogger();
     }
 
